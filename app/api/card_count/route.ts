@@ -13,7 +13,7 @@ type CARD_COUNT_JSON = {
 
 
 export async function GET(){
-    const jsonFilePath = path.join(process.cwd(), 'json', 'cardCountData.json')
+    const jsonFilePath = `/tmp/cardCountData.json`
 
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
@@ -26,7 +26,7 @@ export async function GET(){
 }
 
 export async function POST(request: NextRequest){
-    const jsonFilePath = path.join(process.cwd(), 'json', 'cardCountData.json')
+    const jsonFilePath = `/tmp/cardCountData.json`
     try{
         const previousRawData = await fs.readFile(jsonFilePath, 'utf8');
         
