@@ -2,18 +2,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { promises as fs } from 'fs';
 import path from 'path';
-
-type CARD_COUNT_JSON = {
-
-    playedCard: number;
-    multiplication: number;
-}
+import { initializeJson } from '@/server_function/initializeJson';
 
 
-let RED = 0;
-let timer: NodeJS.Timeout;
+
 export async function POST(request: NextRequest){
-    const jsonFilePath = `/tmp/cardCountData.json`
 
     try{
   
@@ -34,7 +27,7 @@ export async function POST(request: NextRequest){
         //     RED = 0
            
         // }, 3000 )
-        await fs.writeFile(jsonFilePath, JSON.stringify({"playedCard":0,"multiplication":0}))
+        await initializeJson()
         
         return NextResponse.json({ status: 200 })
     }catch(err){

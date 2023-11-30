@@ -1,0 +1,1 @@
+export  const jsonFilePath = `/tmp/cardCountData.json`

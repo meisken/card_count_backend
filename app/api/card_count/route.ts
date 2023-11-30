@@ -1,42 +1,38 @@
 
 import { NextRequest, NextResponse } from 'next/server'
-import { promises as fs } from 'fs';
-import path from 'path';
+
+import { readJson } from '@/server_function/readJson';
+import { updateJsonData } from '@/server_function/updateJsonData';
+import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
+import { initializeJson } from '@/server_function/initializeJson';
 
 
-type CARD_COUNT_JSON = {
-
-    playedCard: number;
-    multiplication: number;
-}
 
 
 
 export async function GET(){
-    const jsonFilePath = `/tmp/cardCountData.json`
+
 
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
-        const rawData = await fs.readFile(jsonFilePath, 'utf8');
-        const parsedData = JSON.parse(rawData)
-        return NextResponse.json({...parsedData, status: 200 })
+        if(!checkJsonFileExist()){
+            await initializeJson()
+        }
+        const data = await readJson()
+        return NextResponse.json({...data, status: 200 })
     }catch(err){
         return NextResponse.json({ status: 404, errorMessage: err })
     }
 }
 
 export async function POST(request: NextRequest){
-    const jsonFilePath = `/tmp/cardCountData.json`
+   
     try{
-        const previousRawData = await fs.readFile(jsonFilePath, 'utf8');
-        
-        const body = await request.json()
-     
-        let isUpdated = JSON.stringify(body) !== previousRawData
-        if(isUpdated){
-            await fs.writeFile(jsonFilePath, JSON.stringify(body))
-
+        if(!checkJsonFileExist()){
+            await initializeJson()
         }
+        
+        const  isUpdated = await updateJsonData(request);
     
   
         return NextResponse.json({ isUpdated, status: 200 })
