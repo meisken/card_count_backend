@@ -1,6 +1,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
-import fs from "fs/promises"
+import { promises as fs } from 'fs';
 
 
 
@@ -10,11 +10,12 @@ type CARD_COUNT_JSON = {
     multiplication: number;
 }
 
-const jsonFilePath = "./cardCountData.json"
+
 
 export async function GET(){
+    const jsonFilePath = process.cwd() + "/cardCountData.json"
 
-    //const cardCountData = await import("@/data.json", {assert: {type: "json"}});
+    //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         const rawData = await fs.readFile(jsonFilePath, 'utf8');
         const parsedData = JSON.parse(rawData)
@@ -25,7 +26,7 @@ export async function GET(){
 }
 
 export async function POST(request: NextRequest){
-
+    const jsonFilePath = process.cwd() + "/cardCountData.json"
     try{
         const previousRawData = await fs.readFile(jsonFilePath, 'utf8');
         

@@ -1,6 +1,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
-import fs from "fs/promises"
+import { promises as fs } from 'fs';
 
 
 type CARD_COUNT_JSON = {
@@ -9,11 +9,11 @@ type CARD_COUNT_JSON = {
     multiplication: number;
 }
 
-const jsonFilePath = "./cardCountData.json"
 
 let RED = 0;
 let timer: NodeJS.Timeout;
 export async function POST(request: NextRequest){
+    const jsonFilePath = process.cwd() + "/cardCountData.json"
 
     try{
   
