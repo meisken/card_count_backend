@@ -13,7 +13,7 @@ type CARD_COUNT_JSON = {
 let RED = 0;
 let timer: NodeJS.Timeout;
 export async function POST(request: NextRequest){
-    const jsonFilePath = process.cwd() + "/cardCountData.json"
+    const jsonFilePath = process.cwd() + "/data/cardCountData.json"
 
     try{
   
