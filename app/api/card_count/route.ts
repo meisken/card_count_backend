@@ -4,13 +4,13 @@ import fs from "fs/promises"
 
 
 
-export type CARD_COUNT_JSON = {
+type CARD_COUNT_JSON = {
 
     playedCard: number;
     multiplication: number;
 }
 
-export const jsonFilePath = "./cardCountData.json"
+const jsonFilePath = "./cardCountData.json"
 
 export async function GET(){
 

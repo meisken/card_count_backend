@@ -1,11 +1,15 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import fs from "fs/promises"
-import { CARD_COUNT_JSON, jsonFilePath } from '../card_count/route';
 
 
+type CARD_COUNT_JSON = {
 
+    playedCard: number;
+    multiplication: number;
+}
 
+const jsonFilePath = "./cardCountData.json"
 
 let RED = 0;
 let timer: NodeJS.Timeout;
