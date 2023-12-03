@@ -6,10 +6,8 @@ const nextConfig = {
                 // matching all API routes
                 source: "/api/:path*",
                 headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'no-store, max-age=0',
-                    },
+                    { key: 'Cache-Control',value: 'no-store, max-age=0'},
+                    { key: 'pragma',value: 'no-cache' },
                     { key: "Access-Control-Allow-Credentials", value: "true" },
                     { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin
                     { key: "Access-Control-Allow-Methods", value: "GET,DELETE" },
