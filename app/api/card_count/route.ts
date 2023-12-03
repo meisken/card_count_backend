@@ -5,15 +5,17 @@ import { readJson } from '@/server_function/readJson';
 import { updateJsonData } from '@/server_function/updateJsonData';
 import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export const dynamic = "force-dynamic";
 export const fetchCache = 'force-no-store';
+export const revalidate = 0
 
 let data = {"playedCard":0,"multiplication":0};
 
 export async function GET(){
 
-
+    noStore()
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         // if(!checkJsonFileExist()){
@@ -28,7 +30,7 @@ export async function GET(){
 }
 
 export async function POST(request: NextRequest){
-   
+    noStore()
     try{
         // if(!checkJsonFileExist()){
         //     await initializeJson()
