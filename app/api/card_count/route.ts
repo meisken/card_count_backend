@@ -6,7 +6,8 @@ import { updateJsonData } from '@/server_function/updateJsonData';
 import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
 
-
+export const dynamic = "force-dynamic";
+export const fetchCache = 'force-no-store';
 
 let data = {"playedCard":0,"multiplication":0};
 
