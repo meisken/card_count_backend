@@ -6,7 +6,9 @@ import { updateJsonData } from '@/server_function/updateJsonData';
 import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
 import { unstable_noStore as noStore } from 'next/cache';
+import { acceptHeader } from '@/server_function/acceptHeader';
 
+export const preferredRegion = 'hkg1'; 
 export const dynamic = "force-dynamic";
 export const fetchCache = 'force-no-store';
 export const revalidate = 0
@@ -14,10 +16,11 @@ export const revalidate = 0
 let data = {"playedCard":0,"multiplication":0};
 
 export async function GET(){
-
+   
     noStore()
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
+        await acceptHeader()
         // if(!checkJsonFileExist()){
         //     await initializeJson()
         // }
