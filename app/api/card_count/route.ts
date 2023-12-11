@@ -26,7 +26,7 @@ export async function GET(request: NextRequest){
         await acceptHeader()
         //revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        revalidateTag("card_count")
+        //revalidateTag("card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest){
 
         //revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        revalidateTag("card_count")
+        //revalidateTag("card_count")
         console.log(cookies())
         //console.log("card count post")
         return NextResponse.json({ ...card_count, status: 200, revalidated: true, serverVision })
