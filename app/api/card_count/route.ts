@@ -7,7 +7,7 @@ import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
 import { /*unstable_noStore as noStore,*/ revalidatePath } from 'next/cache';
 import { acceptHeader } from '@/server_function/acceptHeader';
-
+import { cookies } from "next/headers"
 export const preferredRegion = 'hkg1'; 
 export const dynamic = "force-dynamic";
 export const fetchCache = 'force-no-store';
@@ -24,7 +24,8 @@ export async function GET(request: NextRequest){
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         await acceptHeader()
-        revalidatePath(request.url)
+        revalidatePath(request.nextUrl.basePath)
+        console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
         // }
@@ -44,7 +45,8 @@ export async function POST(request: NextRequest){
         //     await initializeJson()
         // }
         await acceptHeader()
-        revalidatePath(request.url)
+        revalidatePath(request.nextUrl.basePath)
+        console.log(cookies())
         const body = await request.json()
 
         data = body
