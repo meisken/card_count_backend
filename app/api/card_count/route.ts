@@ -5,7 +5,7 @@ import { readJson } from '@/server_function/readJson';
 import { updateJsonData } from '@/server_function/updateJsonData';
 import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { acceptHeader } from '@/server_function/acceptHeader';
 
 export const preferredRegion = 'hkg1'; 
@@ -15,24 +15,25 @@ export const revalidate = 0
 export const dynamicParams = true 
 
 let data = {"playedCard":0,"multiplication":0};
+const  serverVision = "1"
 
 
-
-export async function GET(){
+export async function GET(request: NextRequest){
    
     noStore()
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         await acceptHeader()
+        revalidatePath(request.url)
         // if(!checkJsonFileExist()){
         //     await initializeJson()
         // }
         // const data = await readJson()
         // console.log("card count get")
     
-        return NextResponse.json({...data, status: 200, revalidated: true, now: Date.now() })
+        return NextResponse.json({...data, status: 200, revalidated: true, now: Date.now(), serverVision })
     }catch(err){
-        return NextResponse.json({ status: 404, errorMessage: err, revalidated: true, now: Date.now() })
+        return NextResponse.json({ status: 404, errorMessage: err, revalidated: true, now: Date.now(), serverVision })
     }
 }
 
@@ -42,6 +43,8 @@ export async function POST(request: NextRequest){
         // if(!checkJsonFileExist()){
         //     await initializeJson()
         // }
+        await acceptHeader()
+        revalidatePath(request.url)
         const body = await request.json()
 
         data = body
@@ -51,7 +54,7 @@ export async function POST(request: NextRequest){
         return NextResponse.json({ ...data, status: 200, revalidated: true, now: Date.now() })
     }catch(err){
         console.log(err)
-        return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, revalidated: true, now: Date.now() })
+        return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, revalidated: true, now: Date.now(), serverVision })
     }
  
 
