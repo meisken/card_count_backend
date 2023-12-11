@@ -51,7 +51,7 @@ export async function POST(request: NextRequest){
         // const  isUpdated = await updateJsonData(request);
     
         //console.log("card count post")
-        return NextResponse.json({ ...data, status: 200, revalidated: true, now: Date.now() })
+        return NextResponse.json({ ...data, status: 200, revalidated: true, now: Date.now(), serverVision })
     }catch(err){
         console.log(err)
         return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, revalidated: true, now: Date.now(), serverVision })
