@@ -15,7 +15,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "5"
+const  serverVision = "6"
 
 
 export async function GET(request: NextRequest){
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest){
         // const  isUpdated = await updateJsonData(request);
 
         //revalidatePath(request.nextUrl.basePath)
-        revalidatePath("/api/card_count")
+        //revalidatePath("/api/card_count")
         //revalidateTag("card_count")
         console.log(cookies())
         //console.log("card count post")
