@@ -25,6 +25,7 @@ export async function GET(request: NextRequest){
     try{
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
+        revalidatePath("/api/card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest){
         // }
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
+        revalidatePath("/api/card_count")
         console.log(cookies())
         const body = await request.json()
 

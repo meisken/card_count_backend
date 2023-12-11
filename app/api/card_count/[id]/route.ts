@@ -24,7 +24,8 @@ export async function GET(request: NextRequest){
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         await acceptHeader()
-        revalidatePath(request.nextUrl.basePath)
+        revalidatePath(request.url)
+        revalidatePath("/api/card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -45,7 +46,8 @@ export async function POST(request: NextRequest){
         //     await initializeJson()
         // }
         await acceptHeader()
-        revalidatePath(request.nextUrl.basePath)
+        revalidatePath(request.url)
+        revalidatePath("/api/card_count")
         console.log(cookies())
         const body = await request.json()
 
