@@ -24,9 +24,9 @@ export async function GET(request: NextRequest){
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         await acceptHeader()
-        revalidatePath(request.nextUrl.basePath)
+        //revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        //revalidateTag("card_count")
+        revalidateTag("card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -52,10 +52,10 @@ export async function POST(request: NextRequest){
 
         card_count = body
         // const  isUpdated = await updateJsonData(request);
-        
-        revalidatePath(request.nextUrl.basePath)
+
+        //revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        //revalidateTag("card_count")
+        revalidateTag("card_count")
         console.log(cookies())
         //console.log("card count post")
         return NextResponse.json({ ...card_count, status: 200, revalidated: true, serverVision })
