@@ -15,7 +15,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "4"
+const  serverVision = "5"
 
 
 export async function GET(request: NextRequest){
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest){
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        revalidateTag("card_count")
+        //revalidateTag("card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest){
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        revalidateTag("card_count")
+        //revalidateTag("card_count")
         console.log(cookies())
         const body = await request.json()
 
