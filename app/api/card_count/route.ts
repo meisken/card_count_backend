@@ -14,8 +14,8 @@ export const fetchCache = 'force-no-store';
 export const dynamicParams = true 
 export const revalidate = 0
 
-let data = {"playedCard":0,"multiplication":0};
-const  serverVision = "3"
+let card_count = {"playedCard":0,"multiplication":0};
+const  serverVision = "4"
 
 
 export async function GET(request: NextRequest){
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest){
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        //revalidateTag("card")
+        revalidateTag("card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest){
         // const data = await readJson()
         // console.log("card count get")
         
-        return NextResponse.json({...data, status: 200, revalidated: true, serverVision })
+        return NextResponse.json({...card_count, status: 200, revalidated: true, serverVision })
     }catch(err){
         return NextResponse.json({ status: 404, errorMessage: err, revalidated: true, serverVision })
     }
@@ -49,15 +49,15 @@ export async function POST(request: NextRequest){
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
-        //revalidateTag("card")
+        revalidateTag("card_count")
         console.log(cookies())
         const body = await request.json()
 
-        data = body
+        card_count = body
         // const  isUpdated = await updateJsonData(request);
     
         //console.log("card count post")
-        return NextResponse.json({ ...data, status: 200, revalidated: true, serverVision })
+        return NextResponse.json({ ...card_count, status: 200, revalidated: true, serverVision })
     }catch(err){
         console.log(err)
         return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, revalidated: true, serverVision })
