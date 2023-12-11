@@ -5,7 +5,7 @@ import { readJson } from '@/server_function/readJson';
 import { updateJsonData } from '@/server_function/updateJsonData';
 import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
-import { /*unstable_noStore as noStore,*/ revalidatePath } from 'next/cache';
+import { /*unstable_noStore as noStore,*/ revalidatePath, revalidateTag } from 'next/cache';
 import { acceptHeader } from '@/server_function/acceptHeader';
 import { cookies } from "next/headers"
 export const preferredRegion = 'hkg1'; 
@@ -26,6 +26,7 @@ export async function GET(request: NextRequest){
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
+        revalidateTag("card")
         console.log(cookies())
         // if(!checkJsonFileExist()){
         //     await initializeJson()
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest){
         await acceptHeader()
         revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
+        revalidateTag("card")
         console.log(cookies())
         const body = await request.json()
 
