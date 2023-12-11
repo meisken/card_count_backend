@@ -16,6 +16,8 @@ export const dynamicParams = true
 
 let data = {"playedCard":0,"multiplication":0};
 
+
+
 export async function GET(){
    
     noStore()
@@ -27,9 +29,10 @@ export async function GET(){
         // }
         // const data = await readJson()
         // console.log("card count get")
-        return NextResponse.json({...data, status: 200 })
+    
+        return NextResponse.json({...data, status: 200, revalidated: true, now: Date.now() })
     }catch(err){
-        return NextResponse.json({ status: 404, errorMessage: err })
+        return NextResponse.json({ status: 404, errorMessage: err, revalidated: true, now: Date.now() })
     }
 }
 
@@ -45,10 +48,10 @@ export async function POST(request: NextRequest){
         // const  isUpdated = await updateJsonData(request);
     
         //console.log("card count post")
-        return NextResponse.json({ ...data, status: 200 })
+        return NextResponse.json({ ...data, status: 200, revalidated: true, now: Date.now() })
     }catch(err){
         console.log(err)
-        return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err })
+        return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, revalidated: true, now: Date.now() })
     }
  
 
