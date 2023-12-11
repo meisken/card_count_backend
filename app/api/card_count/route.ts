@@ -47,15 +47,16 @@ export async function POST(request: NextRequest){
         //     await initializeJson()
         // }
         await acceptHeader()
-        revalidatePath(request.nextUrl.basePath)
-        revalidatePath("/api/card_count")
-        //revalidateTag("card_count")
-        console.log(cookies())
+
         const body = await request.json()
 
         card_count = body
         // const  isUpdated = await updateJsonData(request);
-    
+        
+        revalidatePath(request.nextUrl.basePath)
+        revalidatePath("/api/card_count")
+        //revalidateTag("card_count")
+        console.log(cookies())
         //console.log("card count post")
         return NextResponse.json({ ...card_count, status: 200, revalidated: true, serverVision })
     }catch(err){
