@@ -12,10 +12,10 @@ export const preferredRegion = 'hkg1';
 export const dynamic = "force-dynamic";
 export const fetchCache = 'force-no-store';
 export const dynamicParams = true 
-export const revalidate = true
+export const revalidate = 0
 
 let data = {"playedCard":0,"multiplication":0};
-const  serverVision = "1"
+const  serverVision = "2"
 
 
 export async function GET(request: NextRequest){
