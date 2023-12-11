@@ -12,6 +12,7 @@ export const preferredRegion = 'hkg1';
 export const dynamic = "force-dynamic";
 export const fetchCache = 'force-no-store';
 export const revalidate = 0
+export const dynamicParams = true 
 
 let data = {"playedCard":0,"multiplication":0};
 
