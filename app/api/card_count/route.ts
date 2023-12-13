@@ -65,6 +65,8 @@ export async function POST(request: NextRequest){
         },{
             "playedCard": body.playedCard,
             "multiplication": body.multiplication
+        },{
+            new: true
         })
 
 
@@ -79,7 +81,7 @@ export async function POST(request: NextRequest){
 
         console.log(result)
         //console.log("card count post")
-        return NextResponse.json({ status: 200, revalidated: true, serverVision })
+        return NextResponse.json({ playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision })
     }catch(err){
         console.log(err)
         return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, serverVision })
