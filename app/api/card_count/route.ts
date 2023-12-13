@@ -5,7 +5,7 @@ import { readJson } from '@/server_function/readJson';
 import { updateJsonData } from '@/server_function/updateJsonData';
 import { checkJsonFileExist } from '@/server_function/checkJsonFileExist';
 import { initializeJson } from '@/server_function/initializeJson';
-import { /*unstable_noStore as noStore,*/ revalidatePath, revalidateTag } from 'next/cache';
+import { /*unstable_noStore as noStore,*/ revalidatePath, revalidateTag, unstable_noStore } from 'next/cache';
 import { acceptHeader } from '@/server_function/acceptHeader';
 import { cookies } from "next/headers"
 
@@ -18,54 +18,68 @@ export const revalidate = 0
 let card_count = {"playedCard":0,"multiplication":0};
 const  serverVision = "7.2"
 
+import { ObjectId } from "mongodb";
+import CardCount  from '@/model/cardCount';
+import mongoose from "mongoose"
+
+const uri = "mongodb+srv://meiskena999:88QGkPSi6UhUsPbi@cardcount.dcqbfdn.mongodb.net/?retryWrites=true&w=majority";
+const _id = new ObjectId("6579d36f3c64e26013823506");
+mongoose.connect(uri,{
+    dbName: "bj"
+})
+
 
 export async function GET(request: NextRequest){
    
-    //noStore()
+    unstable_noStore()
     //const cardCountData = await import("@/public/cardCountData.json", {assert: {type: "json"}});
     try{
         await acceptHeader()
-        //revalidatePath(request.nextUrl.basePath)
+      
         revalidatePath("/api/card_count")
         revalidatePath(request.url)
-        //revalidateTag("card_count")
-        console.log(cookies())
-        // if(!checkJsonFileExist()){
-        //     await initializeJson()
-        // }
-        // const data = await readJson()
-        // console.log("card count get")
-        const data = card_count;
-        console.log( data)
-        return NextResponse.json({...data, status: 200, revalidated: true, serverVision })
+
+        cookies()
+  
+        const result = await CardCount.findById(_id )
+
+        console.log("played card" ,result.playedCard)
+        return NextResponse.json({  playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision })
     }catch(err){
+        console.log(err)
         return NextResponse.json({ status: 404, errorMessage: err, serverVision })
     }
 }
 
 export async function POST(request: NextRequest){
-    //noStore()
+    unstable_noStore()
     try{
-        // if(!checkJsonFileExist()){
-        //     await initializeJson()
-        // }
+
+
         await acceptHeader()
 
         const body = await request.json()
 
-        card_count = body
-        // const  isUpdated = await updateJsonData(request);
+        const result = await CardCount.findOneAndUpdate({
+            _id
+        },{
+            "playedCard": body.playedCard,
+            "multiplication": body.multiplication
+        })
+
+
+
         setTimeout(() => {
             revalidatePath("/api/card_count")
             revalidatePath(request.url)
         }, 250)
-        //revalidatePath(request.nextUrl.basePath)
-        //revalidatePath("/api/card_count")
-        //revalidateTag("card_count")
+
+
         cookies()
-        console.log(card_count)
+
+        console.log(result)
         //console.log("card count post")
-        return NextResponse.json({ ...card_count, status: 200, revalidated: true, serverVision })
+        return NextResponse.json({ status: 200, revalidated: true, serverVision })
     }catch(err){
         console.log(err)
         return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, serverVision })
