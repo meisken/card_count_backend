@@ -15,7 +15,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "6"
+const  serverVision = "7"
 
 
 export async function GET(request: NextRequest){
