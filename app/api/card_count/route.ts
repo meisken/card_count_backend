@@ -52,7 +52,9 @@ export async function POST(request: NextRequest){
 
         card_count = body
         // const  isUpdated = await updateJsonData(request);
-
+        setTimeout(() => {
+            revalidatePath("/api/card_count")
+        }, 1000)
         //revalidatePath(request.nextUrl.basePath)
         //revalidatePath("/api/card_count")
         //revalidateTag("card_count")
