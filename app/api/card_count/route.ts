@@ -8,6 +8,7 @@ import { initializeJson } from '@/server_function/initializeJson';
 import { /*unstable_noStore as noStore,*/ revalidatePath, revalidateTag } from 'next/cache';
 import { acceptHeader } from '@/server_function/acceptHeader';
 import { cookies } from "next/headers"
+
 export const preferredRegion = 'hkg1'; 
 export const dynamic = "force-dynamic";
 export const fetchCache = 'force-no-store';
@@ -15,7 +16,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "7"
+const  serverVision = "7.1"
 
 
 export async function GET(request: NextRequest){
@@ -26,6 +27,7 @@ export async function GET(request: NextRequest){
         await acceptHeader()
         //revalidatePath(request.nextUrl.basePath)
         revalidatePath("/api/card_count")
+        revalidatePath(request.url)
         //revalidateTag("card_count")
         console.log(cookies())
         // if(!checkJsonFileExist()){
@@ -54,6 +56,7 @@ export async function POST(request: NextRequest){
         // const  isUpdated = await updateJsonData(request);
         setTimeout(() => {
             revalidatePath("/api/card_count")
+            revalidatePath(request.url)
         }, 1000)
         //revalidatePath(request.nextUrl.basePath)
         //revalidatePath("/api/card_count")
