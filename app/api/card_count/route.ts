@@ -16,7 +16,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "7.1"
+const  serverVision = "7.2"
 
 
 export async function GET(request: NextRequest){
@@ -35,10 +35,11 @@ export async function GET(request: NextRequest){
         // }
         // const data = await readJson()
         // console.log("card count get")
-        
-        return NextResponse.json({...card_count, status: 200, revalidated: true, serverVision })
+        const data = card_count;
+        console.log( data)
+        return NextResponse.json({...data, status: 200, revalidated: true, serverVision })
     }catch(err){
-        return NextResponse.json({ status: 404, errorMessage: err, revalidated: true, serverVision })
+        return NextResponse.json({ status: 404, errorMessage: err, serverVision })
     }
 }
 
@@ -57,16 +58,17 @@ export async function POST(request: NextRequest){
         setTimeout(() => {
             revalidatePath("/api/card_count")
             revalidatePath(request.url)
-        }, 1000)
+        }, 250)
         //revalidatePath(request.nextUrl.basePath)
         //revalidatePath("/api/card_count")
         //revalidateTag("card_count")
-        console.log(cookies())
+        cookies()
+        console.log(card_count)
         //console.log("card count post")
         return NextResponse.json({ ...card_count, status: 200, revalidated: true, serverVision })
     }catch(err){
         console.log(err)
-        return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, revalidated: true, serverVision })
+        return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, serverVision })
     }
  
 
