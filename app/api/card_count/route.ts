@@ -45,7 +45,7 @@ export async function GET(request: NextRequest){
 
         const current = new Date();
         if( (result.lastUpdate - current.getTime()) > 1000*60*5){
-            throw new Error("last update is over 5 minutes")
+            return NextResponse.json({ error: 'last update is over 5 minutes' }, { status: 500 })
         }
 
         console.log("played card" ,result.playedCard)
