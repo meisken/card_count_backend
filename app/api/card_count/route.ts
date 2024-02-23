@@ -16,7 +16,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "8.2"
+const  serverVision = "8.3"
 
 import { ObjectId } from "mongodb";
 import CardCount  from '@/model/cardCount';
@@ -46,14 +46,14 @@ export async function GET(request: NextRequest){
         const current = new Date();
 
         if( (current.getTime() - result.lastUpdate) > 1000*60*5){
-            return NextResponse.json({ error: 'last update is over 5 minutes' }, { status: 500 })
+            return NextResponse.json({ error: 'last update is over 5 minutes', playedCard: result.playedCard, multiplication: result.multiplication }, { status: 500 })
         }
 
         console.log("played card" ,result.playedCard)
         return NextResponse.json({  playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision })
     }catch(err){
         console.log(err)
-        return NextResponse.json({ status: 404, errorMessage: err, serverVision, playedCard: 0, multiplication: 0 })
+        return NextResponse.json({ status: 404, errorMessage: err, serverVision})
     }
 }
 
