@@ -16,7 +16,7 @@ export const dynamicParams = true
 export const revalidate = 0
 
 let card_count = {"playedCard":0,"multiplication":0};
-const  serverVision = "7.2"
+const  serverVision = "8"
 
 import { ObjectId } from "mongodb";
 import CardCount  from '@/model/cardCount';
@@ -40,8 +40,13 @@ export async function GET(request: NextRequest){
         revalidatePath(request.url)
 
         cookies()
-  
+
         const result = await CardCount.findById(_id )
+
+        const current = new Date();
+        if( (result.lastUpdate - current.getTime()) > 1000*60*5){
+            throw new Error("last update is over 5 minutes")
+        }
 
         console.log("played card" ,result.playedCard)
         return NextResponse.json({  playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision })
@@ -59,12 +64,13 @@ export async function POST(request: NextRequest){
         await acceptHeader()
 
         const body = await request.json()
-
+        const lastUpdate = (new Date()).getTime()
         const result = await CardCount.findOneAndUpdate({
             _id
         },{
             "playedCard": body.playedCard,
-            "multiplication": body.multiplication
+            "multiplication": body.multiplication,
+            "lastUpdate": lastUpdate
         },{
             new: true
         })
@@ -81,7 +87,7 @@ export async function POST(request: NextRequest){
 
         console.log(result)
         //console.log("card count post")
-        return NextResponse.json({ playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision })
+        return NextResponse.json({ playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision, lastUpdate })
     }catch(err){
         console.log(err)
         return NextResponse.json({ /*isUpdated:false,*/ status: 404, errorMessage: err, serverVision })
