@@ -28,7 +28,7 @@ mongoose.connect(uri,{
     dbName: "bj"
 })
 
-
+ 
 export async function GET(request: NextRequest){
    
     unstable_noStore()
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest){
         return NextResponse.json({  playedCard: result.playedCard, multiplication: result.multiplication, status: 200, revalidated: true, serverVision })
     }catch(err){
         console.log(err)
-        return NextResponse.json({ status: 404, errorMessage: err, serverVision })
+        return NextResponse.json({ status: 404, errorMessage: err, serverVision, playedCard: 0, multiplication: 0 })
     }
 }
 
